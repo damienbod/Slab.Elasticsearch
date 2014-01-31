@@ -72,15 +72,14 @@ namespace Slab.Elasticsearch
             logEvent.Level = loggingEvent.Schema.Level;
             logEvent.Opcode = loggingEvent.Schema.Opcode;
             logEvent.OpcodeName = loggingEvent.Schema.OpcodeName;
-            logEvent.Payload = loggingEvent.Schema.Payload;
+            logEvent.Payload = loggingEvent.Payload;
             logEvent.ProviderId = loggingEvent.Schema.ProviderId;
             logEvent.ProviderName = loggingEvent.Schema.ProviderName;
             logEvent.Task = loggingEvent.Schema.Task;
             logEvent.TaskName = loggingEvent.Schema.TaskName;
             logEvent.Version = loggingEvent.Schema.Version;
             logEvent.EventId = loggingEvent.EventId;
-            logEvent.FormattedMessage = loggingEvent.FormattedMessage;
-            logEvent.FormattedBody = formattedBody;
+            logEvent.FormattedMessage = formattedBody;
             logEvent.Timestamp = loggingEvent.Timestamp;
 
             
