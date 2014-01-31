@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
-using System.Net;
-using System.Net.Mail;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Formatters;
 using Nest;
@@ -12,15 +9,18 @@ namespace Slab.Elasticsearch
 {
     public sealed class ElasticsearchSink : IObserver<EventEntry>
     {
-        private const string DefaultSubject = "Elasticsearch Sink Extension";
-        private IEventTextFormatter formatter;
-        private ElasticClient client;
-        public string ConnectionString { get; set; }
+        private readonly IEventTextFormatter _formatter;
+        private ElasticClient _client;
+        private readonly string _searchIndex = "slab";
+        private readonly string _searchType = "SLABEvent";
+        private readonly string _connectionString = "Server=localhost;Index=log;Port=9200";
 
-        public ElasticsearchSink(string log, IEventTextFormatter formatter)
+        public ElasticsearchSink(string connectionString, string searchIndex, string searchType, IEventTextFormatter formatter)
         {
-            this.ConnectionString = "Server=localhost;Index=log;Port=9200";
-            this.formatter = formatter ?? new EventTextFormatter();
+            if (!string.IsNullOrEmpty(connectionString)) _connectionString = connectionString;
+            if (!string.IsNullOrEmpty(searchIndex)) _searchIndex = searchIndex.ToLower();
+            if (!string.IsNullOrEmpty(searchType)) _searchType = searchType.ToLower();
+            _formatter = formatter ?? new EventTextFormatter();
             
         }
 
@@ -30,7 +30,7 @@ namespace Slab.Elasticsearch
             {
                 using (var writer = new StringWriter())
                 {
-                    this.formatter.WriteEvent(entry, writer);
+                    _formatter.WriteEvent(entry, writer);
                     Post(entry, writer.ToString());
                 }
             }
@@ -38,28 +38,28 @@ namespace Slab.Elasticsearch
 
         private async void Post(EventEntry loggingEvent, string body)
         {
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (string.IsNullOrEmpty(_connectionString))
             {
                 var exception = new InvalidOperationException("Connection string not present.");
                // ErrorHandler.Error("Connection string not included in appender.", exception, ErrorCode.GenericFailure);
 
                 return;
             }
-            var settings = ConnectionBuilder.BuildElsticSearchConnection(ConnectionString);
-            client = new ElasticClient(settings);
-            var logEvent = CreateLogEvent(loggingEvent);
+            var settings = ConnectionBuilder.BuildElsticSearchConnection(_connectionString);
+            _client = new ElasticClient(settings);
+            var logEvent = CreateLogEvent(loggingEvent, body);
             try
             {
-                client.IndexAsync(logEvent, settings.DefaultIndex, "SLABEvent");
-                client.IndexAsync(logEvent, "slab", "SLABEvent");
+                _client.IndexAsync(logEvent, _searchIndex, _searchType);
             }
             catch (InvalidOperationException ex)
             {
+                var ss = "";
                 //ErrorHandler.Error("Invalid connection to ElasticSearch", ex, ErrorCode.GenericFailure);
             }
         }
 
-        private static dynamic CreateLogEvent(EventEntry loggingEvent)
+        private static dynamic CreateLogEvent(EventEntry loggingEvent, string formattedBody)
         {
             if (loggingEvent == null)
             {
@@ -80,6 +80,7 @@ namespace Slab.Elasticsearch
             logEvent.Version = loggingEvent.Schema.Version;
             logEvent.EventId = loggingEvent.EventId;
             logEvent.FormattedMessage = loggingEvent.FormattedMessage;
+            logEvent.FormattedBody = formattedBody;
             logEvent.Timestamp = loggingEvent.Timestamp;
 
             
@@ -92,6 +93,7 @@ namespace Slab.Elasticsearch
 
         public void OnError(Exception error)
         {
+            var ss = "";
         }
 
      
