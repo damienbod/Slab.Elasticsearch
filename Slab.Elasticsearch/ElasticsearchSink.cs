@@ -36,7 +36,7 @@ namespace Slab.Elasticsearch
             }
         }
 
-        private async void Post(EventEntry loggingEvent, string body)
+        private void Post(EventEntry loggingEvent, string body)
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
