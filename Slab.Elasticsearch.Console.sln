@@ -1,16 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slab.Elasticsearch.Console", "Slab.Elasticsearch.Console\Slab.Elasticsearch.Console.csproj", "{B81066F6-3AF7-4828-A2B5-CEBB09DBF867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slab.Elasticsearch", "Slab.Elasticsearch\Slab.Elasticsearch.csproj", "{4264A1D7-51C8-4712-8B1C-CA6AF39658AF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{ADFC50F3-364E-4B0D-91A7-1CEAD03DE511}"
-	ProjectSection(SolutionItems) = preProject
-		Scripts\log-index-spec.json = Scripts\log-index-spec.json
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

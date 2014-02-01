@@ -40,9 +40,6 @@ namespace Slab.Elasticsearch
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
-                var exception = new InvalidOperationException("Connection string not present.");
-               // ErrorHandler.Error("Connection string not included in appender.", exception, ErrorCode.GenericFailure);
-
                 return;
             }
             var settings = ConnectionBuilder.BuildElsticSearchConnection(_connectionString);
@@ -52,10 +49,8 @@ namespace Slab.Elasticsearch
             {
                 _client.IndexAsync(logEvent, _searchIndex, _searchType);
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
-                var ss = "";
-                //ErrorHandler.Error("Invalid connection to ElasticSearch", ex, ErrorCode.GenericFailure);
             }
         }
 
@@ -82,7 +77,6 @@ namespace Slab.Elasticsearch
             logEvent.FormattedMessage = formattedBody;
             logEvent.Timestamp = loggingEvent.Timestamp;
 
-            
             return logEvent;
         }
 
@@ -92,7 +86,6 @@ namespace Slab.Elasticsearch
 
         public void OnError(Exception error)
         {
-            var ss = "";
         }
 
      

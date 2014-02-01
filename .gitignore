@@ -1,2 +1,6 @@
 Debug
 Slab.Elasticsearch.Console.v11.suo
+Slab.Elasticsearch.Console/bin
+Slab.Elasticsearch.Console/obj
+Slab.Elasticsearch/obj
+Slab.Elasticsearch/bin

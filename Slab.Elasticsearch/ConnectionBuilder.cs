@@ -10,10 +10,12 @@ namespace Slab.Elasticsearch
         {
             try
             {
-                var builder = new System.Data.Common.DbConnectionStringBuilder();
-                builder.ConnectionString = connectionString.Replace("{", "\"").Replace("}", "\"");
+                var builder = new System.Data.Common.DbConnectionStringBuilder
+                {
+                    ConnectionString = connectionString.Replace("{", "\"").Replace("}", "\"")
+                };
 
-                StringDictionary lookup = new StringDictionary();
+                var lookup = new StringDictionary();
                 foreach (string key in builder.Keys)
                 {
                     lookup[key] = Convert.ToString(builder[key]);

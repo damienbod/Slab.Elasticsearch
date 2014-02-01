@@ -1,0 +1,1 @@
+.\Nuget\NuGet.exe pack NugetPackage\Slab.Elasticsearch.nuspec

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>NEST</id>
+    <id>NEST.Signed</id>
     <version>0.12.0.0</version>
-    <title>NEST - Elasticsearch Client</title>
+    <title>NEST.Signed - Elasticsearch Client</title>
     <authors>Martijn Laarman and contributors</authors>
     <owners>Martijn Laarman and contributors</owners>
     <licenseUrl>http://mpdreamz.mit-license.org/</licenseUrl>
@@ -11,7 +11,7 @@
     <iconUrl>http://nest.azurewebsites.net/images/nuget-icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Elasticsearch client, strongly typed interface to Elasticsearch but also comes with great low level support.</description>
-    <summary>Elasticsearch client, strongly typed interface to Elasticsearch but also comes with great low level support.</summary>
+    <summary>Elasticsearch client, strongly typed interface to Elasticsearch but also comes with great low level support. This is the signed assembly version.</summary>
     <releaseNotes />
     <copyright />
     <language />
