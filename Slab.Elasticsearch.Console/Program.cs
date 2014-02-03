@@ -8,7 +8,8 @@ namespace Slab.Elasticsearch.Console
     {
         static void Main(string[] args)
         {
-            InProcessLogging();
+            //InProcessLogging();
+            OutOfProcessLogging();
             System.Console.ReadLine();
         }
 
@@ -23,6 +24,13 @@ namespace Slab.Elasticsearch.Console
             TestEvents.Log.Critical("Hello world In-Process Critical");
             TestEvents.Log.Error("Hello world In-Process Error");
             TestEvents.Log.Informational("Hello world In-Process Informational");
+        }
+
+        private static void OutOfProcessLogging()
+        {
+            TestEvents.Log.Critical("Hello world Out-Of-Process Critical");
+            TestEvents.Log.Error("Hello world Out-Of-Process Error");
+            TestEvents.Log.Informational("Hello world Out-Of-Process Informational");
         }
     }
 }

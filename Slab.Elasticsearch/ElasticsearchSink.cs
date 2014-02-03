@@ -20,8 +20,15 @@ namespace Slab.Elasticsearch
             if (!string.IsNullOrEmpty(connectionString)) _connectionString = connectionString;
             if (!string.IsNullOrEmpty(searchIndex)) _searchIndex = searchIndex.ToLower();
             if (!string.IsNullOrEmpty(searchType)) _searchType = searchType.ToLower();
-            _formatter = formatter ?? new EventTextFormatter();
-            
+            _formatter = formatter ?? new EventTextFormatter();  
+        }
+
+        public ElasticsearchSink(string connectionString, string searchIndex, string searchType)
+        {
+            if (!string.IsNullOrEmpty(connectionString)) _connectionString = connectionString;
+            if (!string.IsNullOrEmpty(searchIndex)) _searchIndex = searchIndex.ToLower();
+            if (!string.IsNullOrEmpty(searchType)) _searchType = searchType.ToLower();
+            _formatter = new EventTextFormatter();
         }
 
         public void OnNext(EventEntry entry)
@@ -76,6 +83,7 @@ namespace Slab.Elasticsearch
             logEvent.EventId = loggingEvent.EventId;
             logEvent.FormattedMessage = formattedBody;
             logEvent.Timestamp = loggingEvent.Timestamp;
+            logEvent.HostName = Environment.MachineName;
 
             return logEvent;
         }
@@ -87,9 +95,5 @@ namespace Slab.Elasticsearch
         public void OnError(Exception error)
         {
         }
-
-     
-
-      
     }
 }
